@@ -11,4 +11,6 @@
 기본적으로 설정된 관리자 계정은 다음과 같습니다.  
 username : president  
 PW : @pannorm1423  
-관리자 페이지는 "기본페이지/admin"입니다.
+관리자 페이지는 "기본페이지/admin"입니다.  
+채팅 기능이 없는 기존의 버전을 확인하실 분은 아래의 링크를 참조해주세요.  
+https://github.com/yangdongyeon/pythonanywhere
