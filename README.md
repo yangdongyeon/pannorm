@@ -13,4 +13,21 @@ username : president
 PW : @pannorm1423  
 관리자 페이지는 "기본페이지/admin"입니다.  
 채팅 기능이 없는 기존의 버전을 확인하실 분은 아래의 링크를 참조해주세요.  
-https://github.com/yangdongyeon/pythonanywhere
+https://github.com/yangdongyeon/pythonanywhere  
+  
+필요한 package  
+  
+pip install django djangoframework  
+pip install channels  
+pip install channels_redis  
+pip install uvicorn==0.11.3  
+pip install "uvloop>=0.14.0"  
+pip install whitenoise  
+
+실행 단계
+1. 필요한 package 전부 설치  
+2. sudo apt install uvicorn  
+3. sudo systemctl start redis  
+4. python manage.py collectstatic  
+5. uvicorn mysite.asgi:application --host 0.0.0.0 --port 8000  
+6. http://외부IP:8000으로 접속
