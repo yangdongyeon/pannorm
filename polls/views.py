@@ -5,17 +5,18 @@ from django.template import loader
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
-from .models import Choice, Question, Vote
+from .models import Choice, Question, Vote, ChatMessage
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 
+def get_recent_chat_messages():
+    return ChatMessage.objects.order_by('-created_at')[:50]  # 최근 50개의 메시지를 가져옴
 
 def voting_error(request):
     return render(request, 'polls/error.html')
-
 
 class IndexView(generic.ListView):
     @method_decorator(login_required)
@@ -29,6 +30,12 @@ class IndexView(generic.ListView):
         Excludes any questions that aren't published yet.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
+
+    def get_context_data(self, **kwargs):
+        # 기본 컨텍스트 데이터에 추가
+        context = super().get_context_data(**kwargs)
+        context['chat_messages'] = get_recent_chat_messages()
+        return context
 
 class DetailView(generic.DetailView):
     @method_decorator(login_required)
@@ -47,7 +54,6 @@ class DetailView(generic.DetailView):
         # 투표하지 않았다면 정상적으로 상세 페이지를 렌더링
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
-
 
 class ResultsView(generic.DetailView):
     @method_decorator(login_required)
