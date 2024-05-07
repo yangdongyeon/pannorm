@@ -153,21 +153,15 @@
         <textarea id="chat-log" cols="100" rows="20" readonly></textarea><br/>
         <input id="chat-message-input" type="text" size="100"/><br/>
         <input id="chat-message-submit" type="button" value="Send"/>
-        <script>
-            window.onload = function() {
-                var messages = {{ chat_messages|safe }};
-                messages.forEach(function(message) {
-                    document.getElementById('chat-log').value += (message.username + ": " + message.text + '\\n');
-                });
-            };
 
+        <script>
             const chatSocket = new WebSocket(
                 `ws://${window.location.host}/ws/chat/`
             );
 
             chatSocket.onmessage = (e) => {
                 const data = JSON.parse(e.data);
-                document.querySelector('#chat-log').value += (data.username + ": " + data.message + '\\n');
+                document.querySelector('#chat-log').value += (data.username + ": " + data.message + '\n');
             };
 
             chatSocket.onclose = (e) => {
@@ -176,7 +170,7 @@
 
             document.querySelector('#chat-message-input').focus();
             document.querySelector('#chat-message-input').addEventListener("keyup", (e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter") {  // enter, return
                     e.preventDefault();
                     document.querySelector('#chat-message-submit').click();
                 }
@@ -192,16 +186,3 @@
             });
         </script>    
     </div>
-
-    <footer>
-        <p>&copy; 2024 KAIST Pannorm. All rights reserved.</p>
-    </footer>
-</body>
-</html>
-
-    <footer>
-        <p>&copy; 2024 KAIST Pannorm. All rights reserved.</p>
-    </footer>
-</body>
-</html>
-
